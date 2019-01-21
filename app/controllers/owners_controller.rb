@@ -12,7 +12,13 @@ class OwnersController < ApplicationController
   end
 
   post '/owners' do
-    @owner = Owner.create(params[:owner])
+  @owner = Owner.create(params[:owner])
+  #checks if the user does not fill out the field to name and create a new pet
+    if !params["pet"]["name"].empty?
+       # If so, our code will create that new pet and add it
+       # to the newly-created owner's collection of pets.
+      @owner.pets << Pet.create(name: params["pet"]["name"])
+    end
     redirect "owners/#{@owner.id}"
   end
 
