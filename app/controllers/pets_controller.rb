@@ -10,24 +10,40 @@ class PetsController < ApplicationController
     erb :'/pets/new'
   end
 
+  #Create
   post '/pets' do
-  @pet = Pet.create(params[:pet])
-  #checks if the user does not fill out the field to name and create a new pet
-    if !params["owner"]["name"].empty?
-       # If so, our code will create that new owner and add it
-       # to the newly-created pet
-      @pet.owner << Owner.create(name: params["owner"]["name"])
-    end
-    redirect "pets/#{@pet.id}"
-  end
+   @pet = Pet.create(name: params[:pet][:name])
+   if !params[:pet].key?("owner_id")
+     @pet.owner_id = Owner.create(name: params[:owner][:name]).id
+     @pet.save
+   else
+     @pet.owner_id = params[:pet][:owner_id]
+     @pet.save
+   end
+   redirect to "pets/#{@pet.id}"
+ end
 
   get '/pets/:id' do
     @pet = Pet.find(params[:id])
     erb :'/pets/show'
   end
 
-  patch '/pets/:id' do
-
-    redirect to "pets/#{@pet.id}"
+  #Update
+  get "/pets/:id/edit" do
+    @pet = Pet.find(params[:id])
+    @owners = Owner.all
+    erb :'/pets/edit'
   end
+
+  patch '/pets/:id' do
+    pet = Pet.find(params[:id])
+    pet.update(params[:pet])
+    if !params[:owner][:name].empty?
+      pet.owner = Owner.create(name: params[:owner][:name])
+      pet.save
+    end
+    redirect to "pets/#{pet.id}"
+  end
+
+
 end
