@@ -13,8 +13,8 @@
   <br>
   
     <%@owners.each do |owner|%>
-    <input type="checkbox" name="pet[owner_ids][]" id="<%=owner.id%>" value="<%=owner.id%>">
-    <%=owner.name%></input>
+    <input type="checkbox" name="pet[owner_id]" id="<%=owner.id%>" value="<%=owner.id%>">
+    <%=owner.name%>
 <%end%>
 <input type="submit" value="Create Pet">
 <br>
@@ -22,7 +22,7 @@
 <label>and/or, create a new owner:</label>
     <br>
     <label>name:</label>
-      <input  type="text" name="owner[name]" id="owner_name"></input>
+      <input  type="text" name="owner[name]" id="owner_name">
       
     <br>
   <input type="submit" value="Create Owner">
