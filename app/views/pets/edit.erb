@@ -14,17 +14,17 @@
   <br>
  
   <%@owners.each do |owner|%>
-    <input type="radio" name="pet[owner_id]" value="<%=owner.id%>" 
-    <%='checked' if @pet.owner.include?(owner) %>>
+    <input type="radio" name="pet[owner_id]" id="<%= owner.id%>"value="<%=owner.id%>" 
+    <%='checked' if @pet.owner.id == owner.id %>>
     <%=owner.name%></input>
-   <%end%>
+ <%end%>
  
   <br>
  
   <label>and/or, create a new owner:</label>
   <br>
   <label for="owner_name">Owner</label>
-    <input  type="text" name="owner_name" label="owner_name"></input>
+    <input  type="text" name="owner[name]" id="owner_name" label="owner_name">
   <br>
   <input type="submit" value="Update Pet">
 </form>
